@@ -4,10 +4,6 @@ const path = require('path');
 const prompts = require('prompts');
 const chalk = require('chalk');
 const create = require('./create.js');
-const gitignoreCommand = require('../lib/gitignore.js');
-const travis = require('../lib/travis.js');
-
-const yargs = require('yargs');
 
 const usage = chalk.keyword('violet')("\nUsage: envcli <command> <argument>\n");
 
