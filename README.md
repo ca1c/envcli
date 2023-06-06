@@ -1,4 +1,4 @@
-# gatekeepercli
+# envcli
 
 *Environment Variables Done Right*
 
@@ -10,36 +10,36 @@ This CLI is especially useful if you just cloned a repository and it has a javas
 
 ### Installation
 
-`$ npm install -g gatekeepercli`
+`$ npm install -g envcli`
 
 ### Usage
 
-`$ gk create [filename]`
+`$ envcli create [filename]`
 
 Creates `.env` file for single javascript file:
  - `[filename]` is the javascript file you would like to get the env vars from
 
-`$ gk createDir [directory]`
+`$envcli createDir [directory]`
 
 Creates `.env` file for all javascript files in a directory:
  - `[directory]` is the directory you would like to get the env vars from
 
-`$ gk gitignore [dir]`
+`$ envcli gitignore [dir]`
 
 Adds `.env` to existing or nonexisting gitignore
   - `[dir]` is the directory that the `.gitignore` file is located
     - the default directory if `[dir]` is left blank is `root` or `/`
 
-`$ gk createRev [file] [dir] [filename]`
+`$ envcli createRev [file] [dir] [filename]`
 
 Creates `.js` file with variables based off of variables in a `.env` file
   - `[file]` is the path to the `.env` file
   - `[dir]` is the directory you want to save the new `.js` file to.
     - directory can be nonexistent
   - `[filename]` is the name of the new `.js` file
-    - example: `$ gk createRev .env newjsfiledir env.js`
+    - example: `$ envcli createRev .env newjsfiledir env.js`
 
-`$ gk travis [dir] [travDir]`
+`$ envcli travis [dir] [travDir]`
 
 Adds environment variables to `.travis.yml` file
   - `[dir]` is the directory in which your `.env` file is located
