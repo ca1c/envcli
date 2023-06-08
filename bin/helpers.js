@@ -12,7 +12,17 @@ async function isDirectory(input) {
     return stat.isDirectory();
 }
 
+async function exists(input) {
+    try {
+        await access(input, constants.R_OK | constants.W_OK);
+        return true;
+    } catch {
+        return false;
+    } 
+}
+
 module.exports = {
     isFile: isFile,
-    isDirectory: isDirectory
+    isDirectory: isDirectory,
+    exists: exists
 };

@@ -1,22 +1,24 @@
 const chalk = require('chalk');
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const prompts = require('prompts');
 const getVars = require('./getVars.js');
 const helpers = require('./helpers.js');
 const log = chalk.hex('#4bc8db');
 
-function writeVars(envVars) {
+async function writeVars(envVars) {
     if(!envVars) {
+        console.log(log('no env vars'));
         return;
     }
 
     if(envVars.length === 0) {
+        console.log(log('env vars empty'));
         return;
     }
 
     let contentBuffer = new Uint8Array(Buffer.from(envVars.join('')));
-    fs.writeFile('.env', contentBuffer, (err) => {
+    await fs.writeFile('.env', contentBuffer, (err) => {
         if(err) { reject(err);}
         console.log(log('.env file saved'));
     })
@@ -48,54 +50,103 @@ async function varsInput(environmentVars) {
     return dataArr;
 }
 
-function getJSFilesInDir() {
-
+async function readDirectory(dir) {
+    try {
+        return await fs.readdir(dir);
+    }
+    catch(error) {
+        console.log(error);
+    }
 }
 
-function getDirsInDir() {
+async function getJSFilesInDir(dirList, dir) {
     
+    const jsFiles = [];
+
+
+    for(const item of dirList) {
+        const fullPath = path.join(dir, item);
+
+        if(await helpers.isFile(fullPath) && path.extname(fullPath) === '.js') {
+            jsFiles.push(path.normalize(fullPath));
+        }
+    }
+
+    return jsFiles;
 }
 
-function recursiveDirectoryTraversion(dir, envVars) {
-    
+async function getDirsInDir(dirList, dir) {
+    const dirs = [];
+
+    for(const item of dirList) {
+        const fullPath = path.join(dir, item);
+        if(await helpers.isDirectory(fullPath)) {
+            dirs.push(path.normalize(fullPath));
+        }
+    }
+
+    return dirs;
+}
+
+// returns all js files in all sub-directories
+async function recursiveDirectoryTraversion(dir, jsFiles = []) {
+    const dirList = await readDirectory(dir);
+    const getJSFiles = await getJSFilesInDir(dirList, dir);
+    const nextJSFiles = jsFiles.concat(getJSFiles);
+    const directories = await getDirsInDir(await readDirectory(dir), dir);
+
+    if(directories.length === 0) {
+        return nextJSFiles;
+    }
+
+    for(const directory of directories) {
+        return recursiveDirectoryTraversion(directory, nextJSFiles);
+    }
 }
 
 async function createFromFile(argv) {
-    if(!argv.fdir) {
-        console.log(chalk.red('You need to enter a filename'));
-        return 1;
-    }
-    if(fs.existsSync(argv.fdir) === false) {
-        console.log(chalk.red(`The file, ${argv.file}, does not exist.`));
-        return 1;
-    }
     if(path.extname(argv.fdir) !== '.js') {
         console.log(chalk.red(`${argv.fdir} is not a javascript file`));
         return 1;
     }
+
     const environmentVars = await getVars(argv.fdir);
     const data = await varsInput(environmentVars);
     writeVars(data);
 }
 
+async function createFromDirectory(argv) {
 
+    const jsFiles = await recursiveDirectoryTraversion(argv.fdir, []);
+    let environmentVars = [];
 
-async function createFromDirectory() {
+    for(const file of jsFiles) {
+        envVars = await getVars(file);
+        environmentVars = envVars;
+    }
 
+    const data = await varsInput(environmentVars);
+    writeVars(data);
 }
 
 async function create(argv) {
-    if(helpers.isFile(argv.fdir)) {
+    if(!argv.fdir) {
+        console.log(chalk.red('Please enter a directory or file name.'));
+        return 1;
+    }
+
+    if(!helpers.exists(argv.fdir)) {
+        console.log(chalk.red(`The file or directory, ${argv.fdir}, does not exist.`));
+        return 1;
+    }
+
+    if(await helpers.isFile(argv.fdir)) {
         createFromFile(argv);
     }
 
-    if(helpers.isDirectory(argv.fdir)) {
-        //createFromDirectory
-        createFromDirectory(argv);
+    if(await helpers.isDirectory(argv.fdir)) {
+        await createFromDirectory(argv);
     }
-
-    // Can't find file or directory
-
 }
 
 module.exports = create;
