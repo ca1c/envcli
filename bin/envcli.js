@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const prompts = require('prompts');
 const chalk = require('chalk');
-const create = require('./create.js');
+const create = require('./main.js');
 
 const usage = chalk.keyword('violet')("\nUsage: envcli <command> <argument>\n");
 
@@ -11,8 +11,8 @@ require('yargs')
   .scriptName("envcli")
   .usage(usage)
   // .option('d', {alias: "directory", describe: "Populate from files in Directory.", type: "string", demandOption: 'false'})
-  .command('create [file]', 'main function', (yargs) => {
-    yargs.positional('file', {
+  .command('create [file || directory]', 'main function', (yargs) => {
+    yargs.positional('fdir', {
       type: 'string',
       describe: 'file to iterate through'
     })
