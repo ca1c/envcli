@@ -5,4 +5,4 @@
 
 # Pull Requests
   - Describe your PR throughly
-  - If you are proposing a new feature, try to comment skeleton test functions (we use ava)
+  - If you are proposing a new feature, try to comment skeleton test functions (using ava)

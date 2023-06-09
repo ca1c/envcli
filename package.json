@@ -1,5 +1,5 @@
 {
-  "name": "envcli",
+  "name": "@ca1c/envcli",
   "version": "0.0.1",
   "description": "Populate .env file from javascript variables",
   "main": "index.js",
