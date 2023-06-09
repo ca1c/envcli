@@ -2,9 +2,29 @@ const chalk = require('chalk');
 const fs = require('fs').promises;
 const path = require('path');
 const prompts = require('prompts');
-const getVars = require('./getVars.js');
 const helpers = require('./helpers.js');
 const log = chalk.hex('#4bc8db');
+
+async function getVars(file) {
+    const data = await fs.readFile(file);
+    
+    const words = data.toString().split('\n').join(' ').split(' ');
+    
+    const filteredWords = words.filter(word => word.includes('process.env.'));
+
+    const envVars = filteredWords.map(word => word.split('.')[2].replace(/[^\w]/g, ''));
+
+    
+
+    let varArr = [];
+
+    for(const envVar of envVars) {
+      varArr.push(envVar + "=");
+      varArr.push("\n");
+    }
+      
+    return varArr;
+}
 
 async function writeVars(envVars) {
     if(!envVars) {
@@ -116,13 +136,11 @@ async function createFromFile(argv) {
 }
 
 async function createFromDirectory(argv) {
-
     const jsFiles = await recursiveDirectoryTraversion(argv.fdir, []);
     let environmentVars = [];
-
     for(const file of jsFiles) {
-        envVars = await getVars(file);
-        environmentVars = envVars;
+        const envVars = await getVars(file);
+        environmentVars = environmentVars.concat(envVars);
     }
 
     const data = await varsInput(environmentVars);

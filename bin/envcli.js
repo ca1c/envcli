@@ -1,10 +1,6 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
-const prompts = require('prompts');
 const chalk = require('chalk');
 const create = require('./main.js');
-
 const usage = chalk.keyword('violet')("\nUsage: envcli <command> <argument>\n");
 
 require('yargs')
