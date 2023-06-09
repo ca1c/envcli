@@ -8,7 +8,7 @@ Imagine cloning a large repository with many `process.env.[var]` definitions, an
 
 ### Installation
 
-`$ npm install -g envcli`
+`$ npm install -g @ca1c/envcli`
 
 ### Usage
 
