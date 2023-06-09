@@ -1,12 +1,10 @@
 # envcli
 
-*Environment Variables Done Right*
-
-![Usage Gif](readmeCont/gkgif.gif)
+*Populate `.env` file from javascript variables*
 
 ### Why Would You Use This?
 
-Imagine cloning a large repository with many `process.env.[var]` definitions, and it is difficult to go through all the files to find these variables, especially if they are not properly documented. This cli solves that proble, by finding them for you and allowing you to set their values synchronously in the command line.
+Imagine cloning a large repository with many `process.env.[var]` definitions, and it is difficult to go through all the files to find these variables, especially if they are not properly documented. This cli solves that problem, by finding them for you and allowing you to set their values synchronously in the command line.
 
 ### Installation
 

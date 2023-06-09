@@ -1,7 +1,7 @@
 {
-  "name": "gatekeepercli",
-  "version": "0.1.0",
-  "description": "A cli that creates and fills out a .env file for you",
+  "name": "envcli",
+  "version": "0.0.1",
+  "description": "Populate .env file from javascript variables",
   "main": "index.js",
   "bin": {
     "envcli": "./bin/envcli.js"
@@ -11,23 +11,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/talonbragg/gatekeepercli.git"
+    "url": "git+https://github.com/ca1c/envcli.git"
   },
   "keywords": [
-    "gate",
-    "keeper",
-    "gatekeeper",
-    "js",
-    "gatekeeperjs",
-    "env",
-    ".env"
+    "environment",
+    "variables",
+    ".env",
+    "process",
+    "cli",
+    "envcli"
   ],
-  "author": "Talon Bragg",
+  "author": "ca1c",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/talonbragg/gatekeepercli/issues"
+    "url": "https://github.com/ca1c/envcli/issues"
   },
-  "homepage": "https://github.com/talonbragg/gatekeepercli#readme",
+  "homepage": "https://github.com/ca1c/envcli#readme",
   "dependencies": {
     "chalk": "^3.0.0",
     "prompts": "^2.3.2",

@@ -6,7 +6,6 @@ const usage = chalk.keyword('violet')("\nUsage: envcli <command> <argument>\n");
 require('yargs')
   .scriptName("envcli")
   .usage(usage)
-  // .option('d', {alias: "directory", describe: "Populate from files in Directory.", type: "string", demandOption: 'false'})
   .command('create [fdir]', chalk.hex('#4bc8db')('create .env file from directory or single javascript file'), (yargs) => {
     yargs.positional('fdir', {
       type: 'string',
