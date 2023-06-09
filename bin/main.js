@@ -14,8 +14,6 @@ async function getVars(file) {
 
     const envVars = filteredWords.map(word => word.split('.')[2].replace(/[^\w]/g, ''));
 
-    
-
     let varArr = [];
 
     for(const envVar of envVars) {
