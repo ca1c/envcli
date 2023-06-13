@@ -12,6 +12,7 @@ async function getVars(file) {
     
     const filteredWords = words.filter(word => word.includes('process.env.'));
 
+    // .replace(/[^\w]/g, '') replaces any "\[char]" with '', removing endline characters and others
     const envVars = filteredWords.map(word => word.split('.')[2].replace(/[^\w]/g, ''));
 
     let varArr = [];
