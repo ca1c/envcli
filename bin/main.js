@@ -37,10 +37,14 @@ async function writeVars(envVars) {
     }
 
     let contentBuffer = new Uint8Array(Buffer.from(envVars.join('')));
-    await fs.writeFile('.env', contentBuffer, (err) => {
-        if(err) { reject(err);}
+    try {
+        await fs.writeFile('.env', contentBuffer);
         console.log(log('.env file saved'));
-    })
+    }
+    catch(err) {
+        console.log(err);
+    }
+  
 }
 
 async function varsInput(environmentVars) {
